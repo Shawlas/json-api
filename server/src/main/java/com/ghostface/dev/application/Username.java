@@ -1,8 +1,9 @@
-package com.ghostface.dev.application.screening;
+package com.ghostface.dev.application;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class Username implements CharSequence {
@@ -24,7 +25,14 @@ public class Username implements CharSequence {
     }
 
     public static boolean contains(@NotNull Set<@NotNull User> users, @NotNull String username) {
-        return users.stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username));
+        return users.stream().anyMatch(user -> user.getUsername().getString().equalsIgnoreCase(username));
+    }
+
+    // getters
+
+
+    public @NotNull String getString() {
+        return username;
     }
 
     @Override
@@ -41,5 +49,18 @@ public class Username implements CharSequence {
     @Override
     public CharSequence subSequence(int start, int end) {
         return toString().subSequence(start, end);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        @NotNull Username username1 = (Username) object;
+        return Objects.equals(username, username1.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(username);
     }
 }

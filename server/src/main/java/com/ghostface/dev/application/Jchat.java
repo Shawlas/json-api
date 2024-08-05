@@ -1,6 +1,7 @@
 package com.ghostface.dev.application;
 
-import com.ghostface.dev.application.screening.User;
+import com.ghostface.dev.threads.Insertion;
+import com.ghostface.dev.threads.NewUser;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -11,14 +12,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class Jchat implements Runnable {
 
-    private final @NotNull Set<@NotNull User> users;
+    private final @NotNull Set<@NotNull User> usersConnected;
     private final @NotNull ServerSocket server;
     private @NotNull Socket clientSocket;
 
     public Jchat(int port) {
         try {
             this.server = new ServerSocket(port);
-            this.users = ConcurrentHashMap.newKeySet();
+            this.usersConnected = ConcurrentHashMap.newKeySet();
             System.out.println("Servers started");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -32,7 +33,16 @@ public final class Jchat implements Runnable {
                 try {
                     this.clientSocket = server.accept();
                     System.out.println("Servers available");
-                } catch (IOException e) {
+                    @NotNull NewUser newUser = new NewUser(clientSocket);
+                    @NotNull Thread getNewUser = new Thread(newUser);
+
+                    getNewUser.start();
+                    getNewUser.join();
+                    usersConnected.add(newUser.getUser());
+
+                    new Thread(new Insertion(usersConnected, clientSocket)).start();
+
+                } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -46,14 +56,14 @@ public final class Jchat implements Runnable {
         return clientSocket;
     }
 
-    public boolean containsUser(@NotNull User user) {
-        return users.contains(user);
-    }
-
-    public void addUser(@NotNull User user) {
-        if (users.contains(user)) {
-            return;
-        }
-        users.add(user);
-    }
+//    public boolean containsUser(@NotNull User user) {
+//        return usersConnected.contains(user);
+//    }
+//
+//    public void addUser(@NotNull User user) {
+//        if (usersConnected.contains(user)) {
+//            return;
+//        }
+//        usersConnected.add(user);
+//    }
 }

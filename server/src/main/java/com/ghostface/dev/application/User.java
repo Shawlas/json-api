@@ -1,23 +1,25 @@
-package com.ghostface.dev.application.screening;
+package com.ghostface.dev.application;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
+import java.net.Socket;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class User {
 
-    private final @NotNull String username;
+    private final @NotNull Username username;
     private final @NotNull OffsetDateTime dateCreation;
+    private final @NotNull Socket socket;
 
-    public User(@NotNull String username, @NotNull OffsetDateTime dateCreation) {
+    public User(@NotNull Username username, @NotNull Socket socket) {
         this.username = username;
+        this.socket = socket;
         this.dateCreation = OffsetDateTime.parse(OffsetDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
     }
 
-    public @NotNull String getUsername() {
+    public @NotNull Username getUsername() {
         return username;
     }
 
@@ -26,10 +28,10 @@ public class User {
     }
 
     @Override
-    public boolean equals(@Nullable Object object) {
+    public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        @NotNull User user = (User) object;
+        User user = (User) object;
         return Objects.equals(username, user.username);
     }
 

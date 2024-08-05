@@ -10,10 +10,10 @@ import java.net.Socket;
 
 public class Reader {
 
-    public static @Nullable String of(@NotNull Socket client, @NotNull String str) {
+    public static @Nullable String of(@NotNull Socket client) {
         try {
             @NotNull BufferedReader reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            return str = reader.readLine();
+            return reader.readLine();
         } catch (IOException e) {
             System.err.println("Failed to read field");
             e.printStackTrace();
