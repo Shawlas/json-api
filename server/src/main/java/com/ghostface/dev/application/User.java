@@ -16,7 +16,7 @@ public class User {
     public User(@NotNull Username username, @NotNull Socket socket) {
         this.username = username;
         this.socket = socket;
-        this.dateCreation = OffsetDateTime.parse(OffsetDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+        this.dateCreation = OffsetDateTime.now();
     }
 
     public @NotNull Username getUsername() {

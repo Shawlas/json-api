@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class Username implements CharSequence {
 
-    public final @NotNull String username;
+    private final @NotNull String username;
 
     public Username(@NotNull String username) {
         if (!validate(username)) {

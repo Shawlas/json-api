@@ -33,14 +33,13 @@ public final class Jchat implements Runnable {
                 try {
                     this.clientSocket = server.accept();
                     System.out.println("Servers available");
-                    @NotNull NewUser newUser = new NewUser(clientSocket);
+                    @NotNull NewUser newUser = new NewUser(clientSocket, usersConnected);
                     @NotNull Thread getNewUser = new Thread(newUser);
 
                     getNewUser.start();
                     getNewUser.join();
-                    usersConnected.add(newUser.getUser());
 
-                    new Thread(new Insertion(usersConnected, clientSocket)).start();
+                    new Thread(new Insertion(newUser.getUsersConnected(), clientSocket)).start();
 
                 } catch (IOException | InterruptedException e) {
                     throw new RuntimeException(e);
