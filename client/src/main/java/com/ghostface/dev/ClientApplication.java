@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class ClientApplication {
     public static void main(String[] args) {
-        @NotNull Lobby lobby = new Lobby(8080);
-        lobby.run();
+
     }
 }
