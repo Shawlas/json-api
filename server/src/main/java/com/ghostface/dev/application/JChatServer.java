@@ -1,6 +1,6 @@
 package com.ghostface.dev.application;
 
-import com.ghostface.dev.application.entity.User;
+import com.ghostface.dev.application.impl.thread.JChatServerThread;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -8,13 +8,12 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+
 
 public class JChatServer {
 
     private @Nullable ServerSocket server;
-    private @Nullable JChatClient client;
+    private @Nullable Thread thread;
 
     public JChatServer() {
     }
@@ -35,8 +34,8 @@ public class JChatServer {
             System.out.println("server is running");
 
             @NotNull Socket socket = this.server.accept();
-            this.client = new JChatClient(socket);
-            this.client.accept();
+            this.thread = new JChatServerThread(socket);
+            this.thread.start();
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,7 +1,6 @@
 package com.ghostface.dev.application.thread;
 
 
-import com.ghostface.dev.application.entity.User;
 import com.ghostface.dev.application.util.Username;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,24 +20,23 @@ public class ClientScreeningThread extends Thread {
 
     @Override
     public void run() {
-        synchronized (this) {
-            try {
-                @NotNull PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-                @NotNull BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+        try (PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-                System.out.print("Enter the username: ");
-                @NotNull String username = input.readLine();
+            @NotNull String username;
 
-                if (Username.validate(username)) {
-                    @NotNull User user = new User(username,socket);
-                    writer.println(user);
-                }
+            do {
+                System.out.printf("%nEnter the username: ");
+                username = input.readLine();
+            } while (!Username.validate(username));
 
-                writer.println(username);
+            writer.println(username);
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            System.out.println(reader.readLine());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

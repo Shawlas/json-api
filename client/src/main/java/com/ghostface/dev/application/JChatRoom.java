@@ -10,7 +10,6 @@ import java.net.Socket;
 public class JChatRoom {
 
     private @Nullable Socket socket;
-    private @Nullable Thread thread;
 
     public JChatRoom() {
     }
@@ -18,10 +17,12 @@ public class JChatRoom {
     public void join() {
         try {
             this.socket = new Socket("localhost", 5551);
-            this.thread = new ClientScreeningThread(socket);
-            this.thread.start();
-        } catch (IOException e) {
+            @NotNull Thread thread = new ClientScreeningThread(socket);
 
+            thread.start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
