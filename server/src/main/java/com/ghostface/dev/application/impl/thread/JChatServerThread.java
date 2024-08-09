@@ -22,7 +22,6 @@ public class JChatServerThread extends Thread {
         // catch username
         @NotNull Thread screening = new ScreeningThread(this);
         // listenen the message
-
         screening.start();
     }
 

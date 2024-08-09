@@ -1,4 +1,4 @@
-package com.ghostface.dev.application.impl;
+package com.ghostface.dev.impl;
 
 import com.ghostface.dev.application.entity.User;
 import org.jetbrains.annotations.NotNull;

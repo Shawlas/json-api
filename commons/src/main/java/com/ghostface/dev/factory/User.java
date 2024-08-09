@@ -1,4 +1,4 @@
-package com.ghostface.dev.application.entity;
+package com.ghostface.dev.factory;
 
 import org.jetbrains.annotations.NotNull;
 
