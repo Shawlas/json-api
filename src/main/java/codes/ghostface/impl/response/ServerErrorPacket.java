@@ -1,6 +1,6 @@
-package codes.ghostface.response;
+package codes.ghostface.impl.response;
 
-import codes.ghostface.providers.JsonPacketModelImpl;
+import codes.ghostface.model.JsonPacketImpl;
 import codes.ghostface.providers.ServerPacket;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,9 +9,9 @@ public class ServerErrorPacket extends ServerPacket {
     private final @NotNull Cause cause;
 
     public ServerErrorPacket(@NotNull Cause cause) {
-        super(new JsonPacketModelImpl());
+        super(new JsonPacketImpl());
         this.cause = cause;
-        model = model.serialize(this);
+        model = getUtils().parseJson(this);
     }
 
     public @NotNull Cause getCause() {

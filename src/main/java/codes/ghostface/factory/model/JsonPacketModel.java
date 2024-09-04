@@ -1,4 +1,4 @@
-package codes.ghostface.factory;
+package codes.ghostface.factory.model;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -12,9 +12,5 @@ public interface JsonPacketModel {
     void add(@NotNull String key, @NotNull String value);
 
     @Nullable Comparator<@NotNull String> getComparator();
-
-    @NotNull JsonPacketModel serialize(@NotNull Packet packet);
-
-    @NotNull Packet deserialize(@NotNull JsonPacketModel packet);
 
 }

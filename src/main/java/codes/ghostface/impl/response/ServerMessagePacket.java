@@ -1,7 +1,7 @@
-package codes.ghostface.response;
+package codes.ghostface.impl.response;
 
-import codes.ghostface.model.Username;
-import codes.ghostface.providers.JsonPacketModelImpl;
+import codes.ghostface.entity.Username;
+import codes.ghostface.model.JsonPacketImpl;
 import codes.ghostface.providers.ServerPacket;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,11 +15,11 @@ public class ServerMessagePacket extends ServerPacket {
     private final @NotNull OffsetDateTime time;
 
     public ServerMessagePacket(@NotNull Username username, @NotNull String text, @NotNull OffsetDateTime time) {
-        super(new JsonPacketModelImpl());
+        super(new JsonPacketImpl());
         this.username = username;
         this.text = text;
         this.time = time;
-        model = model.serialize(this);
+        model = getUtils().parseJson(this);
     }
 
     public @NotNull String getText() {

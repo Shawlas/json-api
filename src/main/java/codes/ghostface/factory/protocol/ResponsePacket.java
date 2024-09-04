@@ -1,5 +1,6 @@
-package codes.ghostface.factory;
+package codes.ghostface.factory.protocol;
 
+import codes.ghostface.factory.Packet;
 import codes.ghostface.providers.ClientPacket;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,11 +1,12 @@
-package codes.ghostface;
+package codes.ghostface.protocol;
 
-import codes.ghostface.factory.RequestPacket;
-import codes.ghostface.response.ServerAlertPacket;
-import codes.ghostface.response.ServerErrorPacket;
-import codes.ghostface.response.ServerMessagePacket;
-import codes.ghostface.providers.JsonPacketModelImpl;
+import codes.ghostface.factory.protocol.RequestPacket;
+import codes.ghostface.impl.response.ServerAlertPacket;
+import codes.ghostface.impl.response.ServerErrorPacket;
+import codes.ghostface.impl.response.ServerMessagePacket;
+import codes.ghostface.model.JsonPacketImpl;
 import codes.ghostface.providers.ServerPacket;
+import codes.ghostface.utils.PacketUtilsImpl;
 import org.jetbrains.annotations.NotNull;
 
 public final class RequestPacketImpl implements RequestPacket {
@@ -19,8 +20,13 @@ public final class RequestPacketImpl implements RequestPacket {
     // Implementation
 
     @Override
-    public @NotNull JsonPacketModelImpl getValues() {
+    public @NotNull JsonPacketImpl getValues() {
         return serverPacket.getValues();
+    }
+
+    @Override
+    public @NotNull PacketUtilsImpl getUtils() {
+        return serverPacket.getUtils();
     }
 
     @Override

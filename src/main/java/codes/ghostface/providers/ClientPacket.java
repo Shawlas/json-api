@@ -1,20 +1,28 @@
 package codes.ghostface.providers;
 
+import codes.ghostface.model.JsonPacketImpl;
 import codes.ghostface.factory.Packet;
 
+import codes.ghostface.utils.PacketUtilsImpl;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class ClientPacket implements Packet {
 
-    protected @NotNull JsonPacketModelImpl model;
+    private final @NotNull PacketUtilsImpl utils;
+    protected @NotNull JsonPacketImpl model;
 
-    protected ClientPacket(@NotNull JsonPacketModelImpl model) {
+    protected ClientPacket(@NotNull JsonPacketImpl model) {
         this.model = model;
+        this.utils = new PacketUtilsImpl();
     }
 
     @Override
-    public final @NotNull JsonPacketModelImpl getValues() {
+    public final @NotNull JsonPacketImpl getValues() {
         return model;
     }
 
+    @Override
+    public @NotNull PacketUtilsImpl getUtils() {
+        return utils;
+    }
 }

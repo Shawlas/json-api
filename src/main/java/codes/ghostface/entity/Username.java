@@ -1,4 +1,4 @@
-package codes.ghostface.model;
+package codes.ghostface.entity;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

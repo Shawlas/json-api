@@ -1,6 +1,6 @@
-package codes.ghostface.response;
+package codes.ghostface.impl.response;
 
-import codes.ghostface.providers.JsonPacketModelImpl;
+import codes.ghostface.model.JsonPacketImpl;
 import codes.ghostface.providers.ServerPacket;
 import org.jetbrains.annotations.NotNull;
 
@@ -9,9 +9,9 @@ public class ServerAlertPacket extends ServerPacket {
     private final @NotNull Alert alert;
 
     public ServerAlertPacket(@NotNull Alert alert) {
-        super(new JsonPacketModelImpl());
+        super(new JsonPacketImpl());
         this.alert = alert;
-        model = model.serialize(this);
+        model = getUtils().parseJson(this);
     }
 
     public @NotNull Alert getAlert() {

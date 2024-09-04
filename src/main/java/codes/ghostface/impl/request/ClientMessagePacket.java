@@ -1,6 +1,6 @@
-package codes.ghostface.request;
+package codes.ghostface.impl.request;
 
-import codes.ghostface.providers.JsonPacketModelImpl;
+import codes.ghostface.model.JsonPacketImpl;
 import codes.ghostface.providers.ClientPacket;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,10 +12,10 @@ public final class ClientMessagePacket extends ClientPacket {
     private final @NotNull OffsetDateTime time;
 
     public ClientMessagePacket(@NotNull String text, @NotNull OffsetDateTime time) {
-        super(new JsonPacketModelImpl());
+        super(new JsonPacketImpl());
         this.text = text;
         this.time = time;
-        model = model.serialize(this);
+        model = getUtils().parseJson(this);
     }
 
     public @NotNull String getText() {
