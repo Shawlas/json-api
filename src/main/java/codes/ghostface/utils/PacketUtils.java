@@ -1,8 +1,8 @@
 package codes.ghostface.utils;
 
-import codes.ghostface.impl.utils.PacketUtilsImpl;
-import codes.ghostface.providers.ClientPacket;
-import codes.ghostface.providers.ServerPacket;
+import codes.ghostface.ClientPacket;
+import codes.ghostface.Packet;
+import codes.ghostface.ServerPacket;
 import com.google.gson.JsonElement;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,49 +11,46 @@ import org.jetbrains.annotations.NotNull;
 * */
 public interface PacketUtils {
 
-    @NotNull ServerPacketContent getServerContent();
+    <T extends ServerPacket> @NotNull ServerPacketHandler getServerHandler(@NotNull T packet);
 
-    @NotNull ClientPacketContent getClientContent();
+    <T extends ClientPacket> @NotNull ClientPacketHandler getClientHandler(@NotNull T packet);
 
-    @NotNull ClientPacket serializeClient(@NotNull JsonElement element);
+    <T extends ClientPacket> @NotNull JsonElement deserialize(@NotNull T packet);
 
-    @NotNull ServerPacket serializeServer(@NotNull JsonElement element);
-
-    @NotNull JsonElement deserializeClient(@NotNull ClientPacket clientPacket);
-
-    @NotNull JsonElement deserializeServer(@NotNull ServerPacket serverPacket);
+    <T extends ServerPacket> @NotNull JsonElement deserialize(@NotNull T packet);
 
     /*
-    * This is used to check and parse packets from client
+    * This interface is used to verify client packets
     * */
-    interface ServerPacketContent {
-
+    interface ClientPacketHandler {
         @NotNull ClientPacket getPacket();
-
-        boolean isRequest();
-        boolean isData();
-        boolean isCommand();
-        boolean isMessage();
-        boolean isExecution();
-        boolean isTransfer();
-        boolean isConnection();
-
+        @NotNull ClientCheckers getCheckers();
     }
 
     /*
-     * THIS is used to check and parse packets from server
+     * This interface is used to verify server packets
      * */
-    interface ClientPacketContent {
-
+    interface ServerPacketHandler {
         @NotNull ServerPacket getPacket();
+        @NotNull ServerCheckers getCheckers();
+    }
 
+    // Checkers
+
+    interface ClientCheckers {
+        boolean isConnection();
+        boolean isMessage();
+        boolean isData();
+        boolean isAuthentication();
+        boolean isState();
+        boolean isCommand();
+    }
+
+    interface ServerCheckers {
         boolean isData();
         boolean isMessage();
         boolean isResponse();
-        boolean isTransfer();
-        boolean isSegment();
-        boolean isConnection();
-        boolean isDatagram();
-
+        boolean isError();
+        boolean isState();
     }
 }
