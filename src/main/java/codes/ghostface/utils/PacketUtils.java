@@ -3,6 +3,7 @@ package codes.ghostface.utils;
 import codes.ghostface.ClientPacket;
 import codes.ghostface.Packet;
 import codes.ghostface.ServerPacket;
+import codes.ghostface.impl.utils.PacketUtilsImpl;
 import com.google.gson.JsonElement;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,6 +11,12 @@ import org.jetbrains.annotations.NotNull;
 * This interface contains varius methods to access and manage packets
 * */
 public interface PacketUtils {
+
+    static @NotNull PacketUtils getInstance() {
+        return PacketUtilsImpl.getInstance();
+    }
+
+    // todo add set instance
 
     <T extends ServerPacket> @NotNull ServerPacketHandler getServerHandler(@NotNull T packet);
 
@@ -42,6 +49,7 @@ public interface PacketUtils {
         boolean isMessage();
         boolean isData();
         boolean isAuthentication();
+        boolean isRegister();
         boolean isState();
         boolean isCommand();
     }

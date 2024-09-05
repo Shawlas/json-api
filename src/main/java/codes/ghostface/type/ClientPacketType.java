@@ -6,6 +6,7 @@ public enum ClientPacketType {
     CONNECTION("connection"),
     MESSAGE("message"),
     AUTHENTICATION("authentication"),
+    REGISTER("register"),
     DATA("data"),
     COMMAND("command"),
     STATE("state");
