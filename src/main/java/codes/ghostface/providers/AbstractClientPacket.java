@@ -28,4 +28,9 @@ public abstract class AbstractClientPacket implements ClientPacket {
     public final @NotNull PacketUtils getUtils() {
         return utils;
     }
+
+    @Override
+    public @NotNull String toString() {
+        return values.toString();
+    }
 }
