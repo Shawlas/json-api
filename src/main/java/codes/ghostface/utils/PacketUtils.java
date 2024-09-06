@@ -1,9 +1,7 @@
 package codes.ghostface.utils;
 
 import codes.ghostface.ClientPacket;
-import codes.ghostface.Packet;
 import codes.ghostface.ServerPacket;
-import codes.ghostface.impl.utils.PacketUtilsImpl;
 import com.google.gson.JsonElement;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,19 +10,13 @@ import org.jetbrains.annotations.NotNull;
 * */
 public interface PacketUtils {
 
-    static @NotNull PacketUtils getInstance() {
-        return PacketUtilsImpl.getInstance();
-    }
+    <T extends ServerPacket> @NotNull ServerPacketHandler getServerHandler(@NotNull T server);
 
-    // todo add set instance
+    <T extends ClientPacket> @NotNull ClientPacketHandler getClientHandler(@NotNull T client);
 
-    <T extends ServerPacket> @NotNull ServerPacketHandler getServerHandler(@NotNull T packet);
+    <T extends ClientPacket> @NotNull JsonElement deserialize(@NotNull T client);
 
-    <T extends ClientPacket> @NotNull ClientPacketHandler getClientHandler(@NotNull T packet);
-
-    <T extends ClientPacket> @NotNull JsonElement deserialize(@NotNull T packet);
-
-    <T extends ServerPacket> @NotNull JsonElement deserialize(@NotNull T packet);
+    <T extends ServerPacket> @NotNull JsonElement deserialize(@NotNull T server);
 
     /*
     * This interface is used to verify client packets

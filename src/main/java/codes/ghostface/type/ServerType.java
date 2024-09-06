@@ -2,7 +2,7 @@ package codes.ghostface.type;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum ServerPacketType {
+public enum ServerType {
     DATA("data"),
     MESSAGE("message"),
     RESPONSE("response"),
@@ -11,7 +11,7 @@ public enum ServerPacketType {
 
     private final String description;
 
-    ServerPacketType(@NotNull String description) {
+    ServerType(@NotNull String description) {
         this.description = description;
     }
 

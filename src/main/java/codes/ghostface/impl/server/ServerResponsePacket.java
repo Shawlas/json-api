@@ -1,8 +1,8 @@
 package codes.ghostface.impl.server;
 
+import codes.ghostface.impl.utils.PacketUtilsImpl;
 import codes.ghostface.providers.AbstractServerPacket;
-import codes.ghostface.type.ServerPacketType;
-import codes.ghostface.utils.PacketUtils;
+import codes.ghostface.type.ServerType;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +15,7 @@ public class ServerResponsePacket extends AbstractServerPacket {
     private final @NotNull OffsetDateTime time;
 
     public ServerResponsePacket(@NotNull String content, @NotNull OffsetDateTime dateTime) {
-        super(ServerPacketType.RESPONSE, new JsonObject(), PacketUtils.getInstance());
+        super(ServerType.RESPONSE, new JsonObject(), new PacketUtilsImpl());
         this.content = content;
         this.time = dateTime;
         values.addProperty("type", getType().getDescription());

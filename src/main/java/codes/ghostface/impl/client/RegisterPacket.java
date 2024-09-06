@@ -1,11 +1,11 @@
 package codes.ghostface.impl.client;
 
+import codes.ghostface.impl.utils.PacketUtilsImpl;
 import codes.ghostface.models.Email;
 import codes.ghostface.models.Username;
 import codes.ghostface.providers.AbstractClientPacket;
-import codes.ghostface.type.ClientPacketType;
+import codes.ghostface.type.ClientType;
 
-import codes.ghostface.utils.PacketUtils;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ public class RegisterPacket extends AbstractClientPacket {
     private final @NotNull OffsetDateTime time;
 
     public RegisterPacket(@NotNull Email email, @NotNull Username username, @NotNull String password) {
-        super(ClientPacketType.REGISTER, new JsonObject(), PacketUtils.getInstance());
+        super(ClientType.REGISTER, new JsonObject(), new PacketUtilsImpl());
         this.email = email;
         this.username = username;
         this.password = password;
@@ -44,6 +44,10 @@ public class RegisterPacket extends AbstractClientPacket {
 
     public @NotNull String getPassword() {
         return password;
+    }
+
+    public @NotNull OffsetDateTime getTime() {
+        return time;
     }
 
     @Override

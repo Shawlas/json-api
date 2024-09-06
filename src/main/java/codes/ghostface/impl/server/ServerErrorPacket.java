@@ -1,9 +1,9 @@
 package codes.ghostface.impl.server;
 
+import codes.ghostface.impl.utils.PacketUtilsImpl;
 import codes.ghostface.providers.AbstractServerPacket;
 
-import codes.ghostface.type.ServerPacketType;
-import codes.ghostface.utils.PacketUtils;
+import codes.ghostface.type.ServerType;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +16,7 @@ public class ServerErrorPacket extends AbstractServerPacket {
     private final @NotNull OffsetDateTime time;
 
     public ServerErrorPacket(@NotNull String cause, @NotNull OffsetDateTime dateTime) {
-        super(ServerPacketType.ERROR, new JsonObject(), PacketUtils.getInstance());
+        super(ServerType.ERROR, new JsonObject(), new PacketUtilsImpl());
         this.cause = cause;
         this.time = dateTime;
         values.addProperty("type", getType().getDescription());

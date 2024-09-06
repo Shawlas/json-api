@@ -2,7 +2,7 @@ package codes.ghostface.type;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum ClientPacketType {
+public enum ClientType {
     CONNECTION("connection"),
     MESSAGE("message"),
     AUTHENTICATION("authentication"),
@@ -13,7 +13,7 @@ public enum ClientPacketType {
 
     private final @NotNull String description;
 
-    ClientPacketType(@NotNull String description) {
+    ClientType(@NotNull String description) {
         this.description = description;
     }
 

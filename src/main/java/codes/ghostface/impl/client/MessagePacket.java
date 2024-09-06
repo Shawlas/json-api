@@ -1,8 +1,8 @@
 package codes.ghostface.impl.client;
 
+import codes.ghostface.impl.utils.PacketUtilsImpl;
 import codes.ghostface.providers.AbstractClientPacket;
-import codes.ghostface.type.ClientPacketType;
-import codes.ghostface.utils.PacketUtils;
+import codes.ghostface.type.ClientType;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +15,7 @@ public class MessagePacket extends AbstractClientPacket {
     private final @NotNull OffsetDateTime time;
 
     public MessagePacket(@NotNull String text) {
-        super(ClientPacketType.MESSAGE, new JsonObject(), PacketUtils.getInstance());
+        super(ClientType.MESSAGE, new JsonObject(), new PacketUtilsImpl());
         this.text = text;
         this.time = OffsetDateTime.now();
         values.addProperty("type", getType().getDescription());

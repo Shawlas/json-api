@@ -1,9 +1,9 @@
 package codes.ghostface.impl.client;
 
+import codes.ghostface.impl.utils.PacketUtilsImpl;
 import codes.ghostface.models.Email;
 import codes.ghostface.providers.AbstractClientPacket;
-import codes.ghostface.type.ClientPacketType;
-import codes.ghostface.utils.PacketUtils;
+import codes.ghostface.type.ClientType;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +17,7 @@ public final class AuthenticationPacket extends AbstractClientPacket {
     private final @NotNull OffsetDateTime time;
 
     public AuthenticationPacket(@NotNull Email email, @NotNull String password) {
-        super(ClientPacketType.AUTHENTICATION, new JsonObject(), PacketUtils.getInstance());
+        super(ClientType.AUTHENTICATION, new JsonObject(), new PacketUtilsImpl());
         this.email = email;
         this.password = password;
         this.time = OffsetDateTime.now();
