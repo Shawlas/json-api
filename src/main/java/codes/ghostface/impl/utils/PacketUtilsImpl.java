@@ -2,10 +2,10 @@ package codes.ghostface.impl.utils;
 
 import codes.ghostface.ClientPacket;
 import codes.ghostface.ServerPacket;
-import codes.ghostface.impl.client.AuthenticationPacket;
-import codes.ghostface.impl.client.MessagePacket;
-import codes.ghostface.impl.client.RegisterPacket;
+import codes.ghostface.impl.client.*;
+import codes.ghostface.impl.server.ServerDataPacket;
 import codes.ghostface.impl.server.ServerErrorPacket;
+import codes.ghostface.impl.server.ServerMessagePacket;
 import codes.ghostface.impl.server.ServerResponsePacket;
 import codes.ghostface.utils.PacketUtils;
 import com.google.gson.JsonElement;
@@ -28,55 +28,73 @@ public final class PacketUtilsImpl implements PacketUtils {
 
     @Override
     public @NotNull <T extends ClientPacket> JsonElement deserialize(@NotNull T client) {
-        final @NotNull ClientCheckers handler = client.getUtils().getClientHandler(client).getCheckers();
+        @NotNull ClientPacketHandler handler = client.getUtils().getClientHandler(client);
         @NotNull JsonObject object = new JsonObject();
 
         object.addProperty("type", client.getType().getDescription());
 
-        if (handler.isAuthentication()) {
-            @NotNull AuthenticationPacket auth = (AuthenticationPacket) client;
+        if (handler.getCheckers().isAuthentication()) {
+            @NotNull AuthenticationPacket auth = (AuthenticationPacket) handler.getPacket();
             object.addProperty("email", auth.getEmail().toString());
             object.addProperty("password", auth.getPassword());
             object.addProperty("time", auth.getTime().toString());
             return object;
-        } else if (handler.isMessage()) {
-            @NotNull MessagePacket msg = (MessagePacket) client;
+        } else if (handler.getCheckers().isMessage()) {
+            @NotNull MessagePacket msg = (MessagePacket) handler.getPacket();
             object.addProperty("text",  msg.getText());
             object.addProperty("time", msg.getTime().toString());
             return object;
-        } else if (handler.isRegister()) {
-            @NotNull RegisterPacket register = (RegisterPacket) client;
+        } else if (handler.getCheckers().isRegister()) {
+            @NotNull RegisterPacket register = (RegisterPacket) handler.getPacket();
             object.addProperty("email", register.getEmail().toString());
             object.addProperty("username", register.getUsername().toString());
             object.addProperty("password", register.getPassword());
             object.addProperty("time", register.getTime().toString());
             return object;
+        } else if (handler.getCheckers().isData()) {
+            @NotNull DataPacket<?> data = (DataPacket<?>) handler.getPacket();
+            object.add("datas", data.getData());
+            return object;
+        } else if (handler.getCheckers().isConnection()) {
+            @NotNull ConnectionPacket connection = (ConnectionPacket) handler.getPacket();
+            object.addProperty("scope", connection.getScope().name().toLowerCase());
+            return object;
         } else {
             object = new JsonObject();
-            object.add("value", client.getValues());
+            object.add("value", handler.getPacket().getValues());
             return object;
         }
     }
 
     @Override
     public @NotNull <T extends ServerPacket> JsonElement deserialize(@NotNull T server) {
-        final @NotNull ServerCheckers checkers = server.getUtils().getServerHandler(server).getCheckers();
+        @NotNull ServerPacketHandler handler = server.getUtils().getServerHandler(server);
         @NotNull JsonObject object = new JsonObject();
         object.addProperty("type", server.getType().getDescription());
 
-        if (checkers.isError()) {
-            @NotNull ServerErrorPacket error = (ServerErrorPacket) server;
-            object.addProperty("cause", error.getCause());
+        if (handler.getCheckers().isError()) {
+            @NotNull ServerErrorPacket error = (ServerErrorPacket) handler.getPacket();
+            object.addProperty("cause", error.getCause().getMessage());
             object.addProperty("time", error.getTime().toString());
             return object;
-        } else if (checkers.isResponse()) {
-            @NotNull ServerResponsePacket response = (ServerResponsePacket) server;
+        } else if (handler.getCheckers().isResponse()) {
+            @NotNull ServerResponsePacket response = (ServerResponsePacket) handler.getPacket();
             object.addProperty("content", response.getContent());
             object.addProperty("time", response.getTime().toString());
             return object;
+        } else if (handler.getCheckers().isMessage()) {
+            @NotNull ServerMessagePacket message = (ServerMessagePacket) handler.getPacket();
+            object.addProperty("username", message.getMessage().getUsername().toString());
+            object.addProperty("text", message.getMessage().getContent());
+            object.addProperty("time", message.getMessage().getTime().toString());
+            return object;
+        } else if (handler.getCheckers().isData()) {
+            @NotNull ServerDataPacket<?> data = (ServerDataPacket<?>) handler.getPacket();
+            object.add("datas", data.getData());
+            return object;
         } else {
             object = new JsonObject();
-            object.add("values", server.getValues());
+            object.add("values", handler.getPacket().getValues());
             return object;
         }
     }
@@ -129,17 +147,7 @@ public final class PacketUtilsImpl implements PacketUtils {
 
             @Override
             public boolean isData() {
-                return false;
-            }
-
-            @Override
-            public boolean isState() {
-                return false;
-            }
-
-            @Override
-            public boolean isCommand() {
-                return false;
+                return packet instanceof DataPacket;
             }
         }
     }
@@ -180,17 +188,12 @@ public final class PacketUtilsImpl implements PacketUtils {
 
             @Override
             public boolean isData() {
-                return false;
+                return packet instanceof ServerDataPacket;
             }
 
             @Override
             public boolean isMessage() {
-                return false;
-            }
-
-            @Override
-            public boolean isState() {
-                return false;
+                return packet instanceof ServerMessagePacket;
             }
         }
     }

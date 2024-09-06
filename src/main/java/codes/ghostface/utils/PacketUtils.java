@@ -42,8 +42,6 @@ public interface PacketUtils {
         boolean isData();
         boolean isAuthentication();
         boolean isRegister();
-        boolean isState();
-        boolean isCommand();
     }
 
     interface ServerCheckers {
@@ -51,6 +49,5 @@ public interface PacketUtils {
         boolean isMessage();
         boolean isResponse();
         boolean isError();
-        boolean isState();
     }
 }

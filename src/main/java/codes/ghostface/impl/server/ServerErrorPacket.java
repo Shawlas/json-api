@@ -10,23 +10,22 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.OffsetDateTime;
 
-public class ServerErrorPacket extends AbstractServerPacket {
+public final class ServerErrorPacket extends AbstractServerPacket {
 
-    private final @NotNull String cause;
+    private final @NotNull Throwable cause;
     private final @NotNull OffsetDateTime time;
 
-    public ServerErrorPacket(@NotNull String cause, @NotNull OffsetDateTime dateTime) {
+    public ServerErrorPacket(@NotNull Throwable cause, @NotNull OffsetDateTime dateTime) {
         super(ServerType.ERROR, new JsonObject(), new PacketUtilsImpl());
         this.cause = cause;
         this.time = dateTime;
-        values.addProperty("type", getType().getDescription());
-        values.addProperty("cause", cause);
-        values.addProperty("time", time.toString());
+        values.addProperty("cause", getCause().getMessage());
+        values.addProperty("time", getTime().toString());
     }
 
     // Getters
 
-    public @NotNull String getCause() {
+    public @NotNull Throwable getCause() {
         return cause;
     }
 

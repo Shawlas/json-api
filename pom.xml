@@ -24,6 +24,11 @@
             <artifactId>java-address</artifactId>
             <version>1.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>codes.laivy</groupId>
+            <artifactId>java-serializable</artifactId>
+            <version>1.1</version>
+        </dependency>
     </dependencies>
 
     <properties>
