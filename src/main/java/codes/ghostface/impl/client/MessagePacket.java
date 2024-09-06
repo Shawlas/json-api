@@ -18,9 +18,8 @@ public class MessagePacket extends AbstractClientPacket {
         super(ClientType.MESSAGE, new JsonObject(), new PacketUtilsImpl());
         this.text = text;
         this.time = OffsetDateTime.now();
-        values.addProperty("type", getType().getDescription());
-        values.addProperty("text", text);
-        values.addProperty("time", time.toString());
+        values.addProperty("text", getText());
+        values.addProperty("time", getTime().toString());
     }
 
     // Getters

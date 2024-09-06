@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.OffsetDateTime;
 
-public class RegisterPacket extends AbstractClientPacket {
+public final class RegisterPacket extends AbstractClientPacket {
 
     private final @NotNull Email email;
     private final @NotNull Username username;
@@ -25,11 +25,10 @@ public class RegisterPacket extends AbstractClientPacket {
         this.username = username;
         this.password = password;
         this.time = OffsetDateTime.now();
-        values.addProperty("type", getType().getDescription());
-        values.addProperty("email", email.toString());
-        values.addProperty("username", username.toString());
-        values.addProperty("password", password);
-        values.addProperty("time", time.toString());
+        values.addProperty("email", getEmail().toString());
+        values.addProperty("username", getUsername().toString());
+        values.addProperty("password", getPassword());
+        values.addProperty("time", getTime().toString());
     }
 
     // Getters

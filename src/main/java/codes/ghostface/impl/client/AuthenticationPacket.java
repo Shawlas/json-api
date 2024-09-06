@@ -21,10 +21,9 @@ public final class AuthenticationPacket extends AbstractClientPacket {
         this.email = email;
         this.password = password;
         this.time = OffsetDateTime.now();
-        values.addProperty("type", getType().getDescription());
-        values.addProperty("email", email.toString());
-        values.addProperty("password", password);
-        values.addProperty("time", time.toString());
+        values.addProperty("email", getEmail().toString());
+        values.addProperty("password", getPassword());
+        values.addProperty("time", getTime().toString());
     }
 
     // Getters

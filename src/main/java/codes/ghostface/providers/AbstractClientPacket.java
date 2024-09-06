@@ -16,6 +16,7 @@ public abstract class AbstractClientPacket implements ClientPacket {
         this.type = type;
         this.values = values;
         this.utils = utils;
+        this.values.addProperty("type", getType().getDescription());
     }
 
     @Override

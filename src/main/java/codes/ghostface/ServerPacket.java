@@ -4,8 +4,5 @@ import codes.ghostface.type.ServerType;
 import org.jetbrains.annotations.NotNull;
 
 public interface ServerPacket extends Packet {
-
-    @NotNull
-    ServerType getType();
-
+    @NotNull ServerType getType();
 }

@@ -3,9 +3,10 @@ package codes.ghostface.models;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public final class Username implements CharSequence {
+public final class Username implements CharSequence, Serializable {
 
     public static boolean validate(@NotNull String s) {
         if (!Character.isLetter(s.charAt(0))) {

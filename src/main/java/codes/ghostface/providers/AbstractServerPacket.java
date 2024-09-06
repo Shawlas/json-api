@@ -16,6 +16,7 @@ public abstract class AbstractServerPacket implements ServerPacket {
         this.type = type;
         this.values = values;
         this.utils = utils;
+        this.values.addProperty("type", getType().getDescription());
     }
 
     @Override

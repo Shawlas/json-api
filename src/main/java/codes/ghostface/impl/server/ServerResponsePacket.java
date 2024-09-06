@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.OffsetDateTime;
 
-public class ServerResponsePacket extends AbstractServerPacket {
+public final class ServerResponsePacket extends AbstractServerPacket {
 
     private final @NotNull String content;
     private final @NotNull OffsetDateTime time;
@@ -18,9 +18,8 @@ public class ServerResponsePacket extends AbstractServerPacket {
         super(ServerType.RESPONSE, new JsonObject(), new PacketUtilsImpl());
         this.content = content;
         this.time = dateTime;
-        values.addProperty("type", getType().getDescription());
-        values.addProperty("content", content);
-        values.addProperty("time", time.toString());
+        values.addProperty("content", getContent());
+        values.addProperty("time", getTime().toString());
     }
 
     // Getters

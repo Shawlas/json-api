@@ -5,9 +5,10 @@ import codes.laivy.address.domain.TLD;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public final class Email implements CharSequence {
+public final class Email implements CharSequence, Serializable {
 
     // Static initializers
 
