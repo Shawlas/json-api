@@ -139,7 +139,7 @@ public final class PacketUtilsImpl implements PacketUtils {
 
             @Override
             public boolean isConnection() {
-                return false;
+                return packet instanceof ConnectionPacket;
             }
 
             @Override
