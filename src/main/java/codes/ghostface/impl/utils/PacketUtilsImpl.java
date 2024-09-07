@@ -2,6 +2,7 @@ package codes.ghostface.impl.utils;
 
 import codes.ghostface.ClientPacket;
 import codes.ghostface.ServerPacket;
+import codes.ghostface.exception.PacketException;
 import codes.ghostface.impl.client.*;
 import codes.ghostface.impl.server.ServerDataPacket;
 import codes.ghostface.impl.server.ServerErrorPacket;
@@ -27,7 +28,7 @@ public final class PacketUtilsImpl implements PacketUtils {
     }
 
     @Override
-    public @NotNull <T extends ClientPacket> JsonElement deserialize(@NotNull T client) {
+    public @NotNull <T extends ClientPacket> JsonElement deserialize(@NotNull T client) throws PacketException {
         @NotNull ClientPacketHandler handler = client.getUtils().getClientHandler(client);
         @NotNull JsonObject object = new JsonObject();
 
@@ -59,15 +60,13 @@ public final class PacketUtilsImpl implements PacketUtils {
             @NotNull ConnectionPacket connection = (ConnectionPacket) handler.getPacket();
             object.addProperty("scope", connection.getScope().name().toLowerCase());
             return object;
-        } else {
-            object = new JsonObject();
-            object.add("value", handler.getPacket().getValues());
-            return object;
         }
+
+        throw new PacketException("The client packet does not have a type");
     }
 
     @Override
-    public @NotNull <T extends ServerPacket> JsonElement deserialize(@NotNull T server) {
+    public @NotNull <T extends ServerPacket> JsonElement deserialize(@NotNull T server) throws PacketException {
         @NotNull ServerPacketHandler handler = server.getUtils().getServerHandler(server);
         @NotNull JsonObject object = new JsonObject();
         object.addProperty("type", server.getType().getDescription());
@@ -92,11 +91,9 @@ public final class PacketUtilsImpl implements PacketUtils {
             @NotNull ServerDataPacket<?> data = (ServerDataPacket<?>) handler.getPacket();
             object.add("datas", data.getData());
             return object;
-        } else {
-            object = new JsonObject();
-            object.add("values", handler.getPacket().getValues());
-            return object;
         }
+
+        throw new PacketException("The client packet does not have a type");
     }
 
     // Classes

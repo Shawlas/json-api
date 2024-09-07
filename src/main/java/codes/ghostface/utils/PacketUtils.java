@@ -2,6 +2,7 @@ package codes.ghostface.utils;
 
 import codes.ghostface.ClientPacket;
 import codes.ghostface.ServerPacket;
+import codes.ghostface.exception.PacketException;
 import com.google.gson.JsonElement;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,9 +15,9 @@ public interface PacketUtils {
 
     <T extends ClientPacket> @NotNull ClientPacketHandler getClientHandler(@NotNull T client);
 
-    <T extends ClientPacket> @NotNull JsonElement deserialize(@NotNull T client);
+    <T extends ClientPacket> @NotNull JsonElement deserialize(@NotNull T client) throws PacketException;
 
-    <T extends ServerPacket> @NotNull JsonElement deserialize(@NotNull T server);
+    <T extends ServerPacket> @NotNull JsonElement deserialize(@NotNull T server) throws PacketException;
 
     /*
     * This interface is used to verify client packets

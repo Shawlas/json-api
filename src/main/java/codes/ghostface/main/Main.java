@@ -2,6 +2,7 @@ package codes.ghostface.main;
 
 import codes.ghostface.ClientPacket;
 import codes.ghostface.ServerPacket;
+import codes.ghostface.exception.PacketException;
 import codes.ghostface.impl.client.MessagePacket;
 import codes.ghostface.impl.server.ServerDataPacket;
 import codes.ghostface.impl.server.ServerResponsePacket;
@@ -17,7 +18,7 @@ import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public final class Main {
-    public static void main(String[] args) throws InvalidClassException {
+    public static void main(String[] args) throws InvalidClassException, PacketException {
         @NotNull ClientPacket packet = new MessagePacket("hello world");
         System.out.println(packet.getUtils().deserialize(packet));
 
