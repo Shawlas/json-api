@@ -1,6 +1,6 @@
 package codes.ghostface.jpacket.element;
 
-import codes.ghostface.jpacket.builder.PacketBuilder;
+import codes.ghostface.jpacket.builder.PacketReader;
 import codes.ghostface.jpacket.data.DataPacket;
 import codes.ghostface.jpacket.message.Messages;
 import codes.ghostface.jpacket.module.Side;
@@ -13,7 +13,7 @@ public interface PacketElement<T> {
 
     @NotNull WriteMode getMode();
 
-    @NotNull PacketBuilder<T> getBuilder();
+    @NotNull PacketReader<T> getBuilder();
 
     @NotNull Messages getMessages();
 

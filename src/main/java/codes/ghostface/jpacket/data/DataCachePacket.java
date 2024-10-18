@@ -9,21 +9,22 @@ public class DataCachePacket implements DataPacket {
 
     protected final @NotNull Object lock = new Object();
     private final @NotNull File file;
-    private final int length;
+    private final int size;
+
     private volatile boolean closed = false;
 
     public DataCachePacket(@NotNull InputStream stream) throws IOException {
         this.file = File.createTempFile("data", "-cache_packet");
         file.deleteOnExit();
 
-        this.length = uptdate(stream);
+        this.size = uptdate(stream);
     }
 
     public DataCachePacket(byte @NotNull [] bytes) throws IOException {
         this.file = File.createTempFile("data", "-cache_packet");
         file.deleteOnExit();
 
-        this.length = bytes.length;
+        this.size = bytes.length;
         uptdate(new ByteArrayInputStream(bytes));
     }
 
@@ -43,25 +44,32 @@ public class DataCachePacket implements DataPacket {
         }
     }
 
+    public @NotNull File getFile() {
+        return file;
+    }
+
     @Override
     public @NotNull InputStream getInputStream() throws IOException {
         if (closed) {
             throw new IOException("Data is close");
+        } else synchronized (lock) {
+            return Files.newInputStream(file.toPath());
         }
-        return Files.newInputStream(file.toPath());
     }
 
     @Override
     public void write(@NotNull OutputStream output) throws IOException {
         if (closed) {
             throw new IOException("Data is close");
-        } else try (@NotNull InputStream input = getInputStream()) {
-            byte @NotNull [] bytes = new byte[8192];
+        } else synchronized (lock) {
+            try (@NotNull InputStream input = getInputStream()) {
+                byte @NotNull [] bytes = new byte[8192];
 
-            int read;
-            while ((read = input.read(bytes)) != -1) {
-                output.write(bytes, 0, read);
-                output.flush();
+                int read;
+                while ((read = input.read(bytes)) != -1) {
+                    output.write(bytes, 0, read);
+                    output.flush();
+                }
             }
         }
     }
@@ -81,6 +89,6 @@ public class DataCachePacket implements DataPacket {
 
     @Override
     public int size() {
-        return length;
+        return size;
     }
 }

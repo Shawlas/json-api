@@ -9,17 +9,17 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public abstract class PacketBuilder<T> {
+public abstract class PacketReader<T> {
 
     protected final @NotNull InputStream stream;
     protected final boolean marksuported;
 
-    protected PacketBuilder(@NotNull InputStream in) {
+    protected PacketReader(@NotNull InputStream in) {
         this.stream = in;
         this.marksuported = stream.markSupported();
     }
 
-    protected PacketBuilder(@NotNull String packet) {
+    protected PacketReader(@NotNull String packet) {
         this.stream = new ByteArrayInputStream(packet.getBytes());
         this.marksuported = stream.markSupported();
     }
