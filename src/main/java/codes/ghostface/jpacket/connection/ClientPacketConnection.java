@@ -1,7 +1,6 @@
 package codes.ghostface.jpacket.connection;
 
 import codes.ghostface.jpacket.element.client.ClientPacket;
-import codes.ghostface.jpacket.element.server.ServerPacket;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,10 +25,6 @@ public interface ClientPacketConnection extends Closeable {
     @NotNull ClientPacket<?> read() throws IOException;
 
     @Nullable InputStream read(@NotNull Duration timeout);
-
-    default void write(@NotNull ServerPacket<?> packet) throws IOException {
-        packet.getBuilder().write(getSocket().getOutputStream());
-    }
 
     boolean isOpen();
 
