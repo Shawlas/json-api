@@ -1,11 +1,13 @@
 package codes.ghostface.jpacket.exception;
 
-public class ParseBuilderException extends Exception {
+import org.jetbrains.annotations.NotNull;
+
+public class ParseBuilderException extends PacketParseException {
     public ParseBuilderException(String message) {
         super(message);
     }
 
-    public ParseBuilderException(String message, Throwable cause) {
+    public ParseBuilderException(@NotNull String message, @NotNull Throwable cause) {
         super(message, cause);
     }
 }
