@@ -20,14 +20,10 @@
             <version>24.1.0</version>
         </dependency>
         <dependency>
-            <groupId>codes.laivy</groupId>
-            <artifactId>java-address</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>codes.laivy</groupId>
-            <artifactId>java-serializable</artifactId>
-            <version>1.1</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.11.3</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
